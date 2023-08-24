@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lista de tarefas</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-8">
+        <h1 class="text-2xl font-bold mb-4">Minha lista</h1>
+        <ul>
+            {% for task in tasks %}
+            <li class="bg-white rounded-lg shadow p-4 mb-4">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h3 class="text-lg font-semibold">{{ task.title }}</h3>
+                        <p class="text-gray-600">{{ task.description }}</p>
+                    </div>
+                    <div class="space-x-2">
+                        <a href="{{ url_for('edit_task', task_id=task.id) }}" class="text-blue-500 hover:underline">Editar</a>
+                        <form action="{{ url_for('delete_task', task_id=task.id) }}" method="post" class="inline">
+                            <button type="submit" class="text-red-500 hover:underline">Deletar</button>
+                        </form>
+                    </div>
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        <h2 class="text-xl font-bold mt-8">Adicionar nova tarefa</h2>
+        <form action="/add" method="post" class="mt-4">
+            <label for="title" class="block font-medium">Título:</label>
+            <input type="text" name="title" class="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+            <label for="description" class="block mt-2 font-medium">Descrição:</label>
+            <input type="text" name="description" class="w-full p-2 border rounded-lg focus:outline-none focus:ring focus:border-blue-300">
+            <button type="submit" class="mt-4 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Adicionar outra tarefa</button>
+        </form>
+    </div>
+</body>
+</html>
